@@ -1,17 +1,40 @@
 from display import *
 from matrix import *
-
+import math
 
 def add_circle( points, cx, cy, cz, r, step ):
-    pass
+    t = step
+    x0 = cx+r*math.cos(0)
+    y0 = cy+r*math.sin(0)
+    while t <= 1+step:
+        theta = (t)*2*math.pi
+        x = cx+r*math.cos(theta)
+        y = cy+r*math.sin(theta)
+        z = 0
+        add_edge(points, x_p, y_p, z, x, y, z)
+        x0 = x
+        y0 = y
+        t += step
 
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
+    t = 0
     if curve_type == "hermite":
-        constant = generate_curve()
+        x_coef = generate_curve_coefs(x0,x1,x2,x3,True)[0]
+        y_coef = generate_curve_coefs(y0,y1,y2,y3,True)[0]
     elif curve_type == "bezier":
-        
+        x_coef = generate_curve_coefs(x0,x1,x2,x3,False)[0]
+        y_coef = generate_curve_coefs(y0,y1,y2,y3,False)[0]
     else:
         print("error parsing: unable to dermine curve type")
+    while t < 1.0001:
+        x1 = x_coef[0]*t**3 + x_coef[1]*t**2 + x_coef[2]*t + x_coef[3]
+        y1 = y_coef[0]*t**3 + y_coef[1]*t**2 + y_coef[2]*t + y_coef[3]
+
+        add_edge(points,x0,y0,0,x1,y1,0)
+
+        x0 = x1
+        y0 = y1
+        t += step
 
 
 def draw_lines( matrix, screen, color ):
