@@ -11,7 +11,7 @@ def add_circle( points, cx, cy, cz, r, step ):
         x = cx+r*math.cos(theta)
         y = cy+r*math.sin(theta)
         z = 0
-        add_edge(points, x_p, y_p, z, x, y, z)
+        add_edge(points, x0, y0, z, x, y, z)
         x0 = x
         y0 = y
         t += step
@@ -19,11 +19,11 @@ def add_circle( points, cx, cy, cz, r, step ):
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
     t = 0
     if curve_type == "hermite":
-        x_coef = generate_curve_coefs(x0,x1,x2,x3,True)[0]
-        y_coef = generate_curve_coefs(y0,y1,y2,y3,True)[0]
+        x_coef = generate_curve_coefs(x0,x1,x2,x3,True)
+        y_coef = generate_curve_coefs(y0,y1,y2,y3,True)
     elif curve_type == "bezier":
-        x_coef = generate_curve_coefs(x0,x1,x2,x3,False)[0]
-        y_coef = generate_curve_coefs(y0,y1,y2,y3,False)[0]
+        x_coef = generate_curve_coefs(x0,x1,x2,x3,False)
+        y_coef = generate_curve_coefs(y0,y1,y2,y3,False)
     else:
         print("error parsing: unable to dermine curve type")
     while t < 1.0001:

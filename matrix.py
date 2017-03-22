@@ -34,11 +34,11 @@ def generate_curve_coefs( p1, p2, p3, p4, t):
     mat = new_matrix()
     mat[0] = [p1,p2,p3,p4]
     if t: #hermite
-        matrix_mult(make_hermite(),m2)
+        matrix_mult(make_hermite(),mat)
     else: #bezier 
-        matrix_mult(make_bezier(),m2)
+        matrix_mult(make_bezier(),mat)
 
-    return m2[0]
+    return mat[0]
 
 
 def make_translate( x, y, z ):
